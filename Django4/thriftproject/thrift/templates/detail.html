@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Detail{% endblock %}
+
+{% block contents %}
+    <br>
+    <br>
+    <div class="container marketing">
+        <div class="row featurette">
+            <div id="myCarousel" class="carousel slide col-md-5 order-md-1 offset-md-1" data-bs-ride="carousel" data-bs-theme="light">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="{{ object.image1.url }}" class="bd-placeholder-img" width="100%" height="100%" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="var(--bs-secondary-color)"/></img>
+                    </div>
+                    {% if object.image2 %}
+                    <div class="carousel-item">
+                        <img src="{{ object.image2.url }}" class="bd-placeholder-img" width="100%" height="100%" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="var(--bs-secondary-color)"/></img>
+                    </div>
+                    {% endif %}
+                    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+                        <span style="background-color:black" class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+                        <span style="background-color: black;" class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-5 order-md-2" style="padding-top:24px; margin-left:12px;">
+                <h1 class="featurette-heading fw-normal lh-1">{{object.title}}</h2>
+                <div style="margin:16px 0;">
+                    <h2>￥{{object.price}}円</h2>
+                    {% if user.is_authenticated %}
+                        {% if object.is_purchased %}
+                            <button disabled>購入済み</button>
+                        {% else %}
+                        <form method="post">
+                            {% csrf_token %}
+                            <button type="submit">購入する</button>
+                        </form>
+                        {% endif %}
+                    {% else %}
+                    <p><a href="{% url 'accounts:login' %}" class="btn btn-primary">購入するにはログインが必要です</a></p>
+                    {% endif %}
+                </div>
+                <hr>
+                <div>
+                    <p>性別：{{object.gender}}</p>
+                    <p>カテゴリ：{{object.category}}</p>
+                    <p>サイズ：{{object.size}}</p>
+                    <p>状態：<br>{{object.status|linebreaksbr}}</p>
+                    <p>{{object.comment|linebreaksbr}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

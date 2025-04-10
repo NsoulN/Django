@@ -1,0 +1,22 @@
+<!-- ベーステンプレートを適用する-->
+{% extends 'base.html' %}
+<!-- ヘッダー情報のページタイトルを設定する-->
+{% block title %}Photo Detail{% endblock %}
+
+{% block contents %}
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col offset-3">
+      <h2>{{object.title}}</h2>
+      <p>{{object.comment}}</p>
+      <br>
+      <p>{{object.posted_at}}に投稿</p>
+      <p><img src="{{ object.image1.url }}"></p>
+      {% if object.image2 %}
+        <p><img src="{{ object.image2.url }}"></p>
+      {% endif %}
+      </div>
+  </div>
+</div>
+{% endblock %}
